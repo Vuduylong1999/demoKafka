@@ -28,12 +28,15 @@ public class DemoConsumerApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        sendRecordToTopic(kafkaTopic, String.valueOf(Instant.now()));
-        sendRecordToTopic(kafkaTopic, "Heart");
-        sendRecordToTopic(kafkaTopic, "Logs");
-        sendRecordToTopic(kafkaTopic, "Event Data");
-        sendRecordToTopic(kafkaTopic, "Stream Processing");
-        sendRecordToTopic(kafkaTopic, "and Data Integration");
+        for (int i = 0; i < 100; i++) {
+            sendRecordToTopic(kafkaTopic, String.valueOf(Instant.now()));
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
     private void sendRecordToTopic(String topic, String value) {
